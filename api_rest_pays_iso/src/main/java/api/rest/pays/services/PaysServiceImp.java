@@ -35,7 +35,7 @@ public class PaysServiceImp implements PaysService {
 	@Override
 	public PaysViewDto getOneByAlpha2Code(String alpha2Code) {
 
-		return null;
+		return this.paysRepo.getOneByCode(alpha2Code);
 
 	}
 
