@@ -1,8 +1,10 @@
 package api.rest.pays.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import api.rest.pays.dtos.PaysDto;
 import api.rest.pays.dtos.PaysViewDto;
@@ -11,6 +13,7 @@ import api.rest.pays.repositories.PaysRepository;
 
 @Service
 public class PaysServiceImp implements PaysService {
+	@Autowired
 	private PaysRepository paysRepo;
 
 	protected void PaysServiceImpl(PaysRepository paysRepo) {
@@ -18,11 +21,12 @@ public class PaysServiceImp implements PaysService {
 	}
 
 	@Override
-	public void create(PaysDto dto) {
-
-		Pays pays = new Pays();
-		populateAndSave(dto, pays);
-
+	public Pays create(PaysDto dto, String alpha2Code) {
+		if((paysRepo.getOneByCode(alpha2Code).equals(null))){
+			return populateAndSave(dto);
+		}else {
+			return null;
+		}
 	}
 
 	@Override
@@ -34,9 +38,7 @@ public class PaysServiceImp implements PaysService {
 
 	@Override
 	public PaysViewDto getOneByAlpha2Code(String alpha2Code) {
-
-		return this.paysRepo.getOneByCode(alpha2Code);
-
+				return this.paysRepo.getOneByCode(alpha2Code);
 	}
 
 	@Override
@@ -46,12 +48,13 @@ public class PaysServiceImp implements PaysService {
 
 	}
 
-	private void populateAndSave(PaysDto dto, Pays pays){
+	private Pays populateAndSave(PaysDto dto){
+		Pays pays = new Pays();
         pays.setName(dto.getName());
         pays.setAlpha2Code(dto.getAlpha2Code());
         pays.setRegion(dto.getRegion());
         pays.setFlag(dto.getFlag());
-        paysRepo.save(pays);
+        return paysRepo.save(pays);
 
     }
 

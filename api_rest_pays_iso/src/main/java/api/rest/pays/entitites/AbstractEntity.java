@@ -16,7 +16,7 @@ public abstract class AbstractEntity {
 		//
 	}
 
-	public Long getId() {
+	private Long getId() {
 		return id;
 	}
 

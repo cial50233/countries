@@ -22,7 +22,15 @@ public class Pays extends AbstractEntity {
     }
     
 
-    public String getName() {
+    public Pays(String alpha2Code, String name, String region, String flag) {
+		this.alpha2Code = alpha2Code;
+		this.name = name;
+		this.region = region;
+		this.flag = flag;
+	}
+
+
+	public String getName() {
 		return name;
 	}
 
