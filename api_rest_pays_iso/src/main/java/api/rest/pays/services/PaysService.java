@@ -9,7 +9,7 @@ import api.rest.pays.entitites.Pays;
 
 public interface PaysService {
 
-	Pays create(PaysDto dto, String alpha2Code);
+	PaysViewDto create(PaysDto dto, String alpha2Code);
 
 	PaysViewDto getOne(Long id);
 

@@ -21,9 +21,10 @@ public class PaysServiceImp implements PaysService {
 	}
 
 	@Override
-	public Pays create(PaysDto dto, String alpha2Code) {
+	public PaysViewDto create(PaysDto dto, String alpha2Code) {
 		if((paysRepo.getOneByCode(alpha2Code) == null)){
-			return populateAndSave(dto);
+			populateAndSave(dto);
+			return this.getOneByAlpha2Code(alpha2Code);
 		}else {
 			return null;
 		}
@@ -48,13 +49,13 @@ public class PaysServiceImp implements PaysService {
 
 	}
 
-	private Pays populateAndSave(PaysDto dto){
+	private void populateAndSave(PaysDto dto){
 		Pays pays = new Pays();
         pays.setName(dto.getName());
         pays.setAlpha2Code(dto.getAlpha2Code());
         pays.setRegion(dto.getRegion());
         pays.setFlag(dto.getFlag());
-        return paysRepo.save(pays);
+        paysRepo.save(pays);
 
     }
 

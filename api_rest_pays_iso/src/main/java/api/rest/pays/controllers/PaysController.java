@@ -41,21 +41,7 @@ public class PaysController {
 	public String getAll() {
 		return "azetty";
 	}
-	
-/*	
-	@GetMapping("/{alpha2Code}")
-	public PaysViewDto getOneByAlpha2Code(@PathVariable("alpha2Code") String alpha2Code) {
-		if (!(service.getOneByAlpha2Code(alpha2Code)).equals(null)) {
-			return service.getOneByAlpha2Code(alpha2Code);
-		} else {
-			PaysDto paysDto = restTemplate.getForObject("https://restcountries.eu/rest/v2/alpha/" + alpha2Code,
-					PaysDto.class);
-			//service.create(paysDto, alpha2Code);
-			return null;
-		}
-	}
-	
-*/	
+
 
 	@GetMapping("/{alpha2Code}")
 	public PaysViewDto getOneByAlpha2Code(@PathVariable("alpha2Code") String alpha2Code) {
@@ -63,7 +49,7 @@ public class PaysController {
 			return service.getOneByAlpha2Code(alpha2Code);
 		}else {
 			PaysDto paysDto = restTemplate.getForObject("https://restcountries.eu/rest/v2/alpha/" + alpha2Code, PaysDto.class);
-			return (PaysViewDto) service.create(paysDto, alpha2Code);
+			return service.create(paysDto, alpha2Code);
 		}
 	}
 	
@@ -74,7 +60,7 @@ public class PaysController {
 	}
 
 	@GetMapping("/c/{alpha2Code}")
-	protected Pays create(@PathVariable("alpha2Code") String alpha2Code) {
+	protected PaysViewDto create(@PathVariable("alpha2Code") String alpha2Code) {
 		PaysDto paysDto = restTemplate.getForObject("https://restcountries.eu/rest/v2/alpha/" + alpha2Code, PaysDto.class);
 		return service.create(paysDto, alpha2Code);
 	}
