@@ -59,7 +59,12 @@ public class PaysController {
 
 	@GetMapping("/{alpha2Code}")
 	public PaysViewDto getOneByAlpha2Code(@PathVariable("alpha2Code") String alpha2Code) {
-		return service.getOneByAlpha2Code(alpha2Code);
+		if((service.getOneByAlpha2Code(alpha2Code) != null)){
+			return service.getOneByAlpha2Code(alpha2Code);
+		}else {
+			PaysDto paysDto = restTemplate.getForObject("https://restcountries.eu/rest/v2/alpha/" + alpha2Code, PaysDto.class);
+			return (PaysViewDto) service.create(paysDto, alpha2Code);
+		}
 	}
 	
 	@RequestMapping("/ext/{alpha2Code}")
