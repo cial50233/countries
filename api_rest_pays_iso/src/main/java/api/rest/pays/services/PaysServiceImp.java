@@ -1,10 +1,7 @@
 package api.rest.pays.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import api.rest.pays.dtos.PaysDto;
 import api.rest.pays.dtos.PaysViewDto;
@@ -31,22 +28,8 @@ public class PaysServiceImp implements PaysService {
 	}
 
 	@Override
-	public PaysViewDto getOne(Long id) {
-
-		return paysRepo.getById(id);
-
-	}
-
-	@Override
 	public PaysViewDto getOneByAlpha2Code(String alpha2Code) {
 				return this.paysRepo.getOneByCode(alpha2Code);
-	}
-
-	@Override
-	public Page<PaysViewDto> getAll(Pageable pageable) {
-
-		return paysRepo.getAllProjectedBy(pageable);
-
 	}
 
 	private void populateAndSave(PaysDto dto){
