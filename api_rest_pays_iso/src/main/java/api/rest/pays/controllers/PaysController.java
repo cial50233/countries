@@ -18,9 +18,6 @@ public class PaysController {
 	@Autowired
 	private final PaysService service;
 	
-	@Autowired
-	private RestTemplate restTemplate;
-
 	protected PaysController(PaysService service) {
 		this.service = service;
 	}
@@ -28,16 +25,7 @@ public class PaysController {
 	@GetMapping("/{alpha2Code}")
 	public PaysViewDto getOneByAlpha2Code(@PathVariable("alpha2Code") String alpha2Code) {
 		PaysViewDto pays = service.getOneByAlpha2Code(alpha2Code); 
-		if((pays != null)){
-			return pays;
-		}else {
-			PaysDto paysDto = restTemplate.getForObject("https://restcountries.eu/rest/v2/alpha/" + alpha2Code, PaysDto.class);
-			return service.create(paysDto, alpha2Code);
-		}
+		return pays;
 	}
 	
-	@Bean
-	public RestTemplate restTemplate() {
-	    return new RestTemplate();
-	}
 }
